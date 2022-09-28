@@ -38,11 +38,11 @@ ENABLE;
 CREATE SEQUENCE SEQ_TEST_MEET INCREMENT BY 1 START WITH 1001;
 
 insert into test_meet(MEET_NO, MEET_NAME, MEET_DESCRIPTION, MEET_CITY, MEET_COUNTY, MEET_INTEREST_NAME, MEET_GENDER, MEET_NOP, MEET_AGE, MEET_DATE, USER_NO) 
-values ('M'||SEQ_TEST_MEET.NEXTVAL, '��Ɽ�� Ŀ��ó����', '��Ɽ�� �����Ͻô� Ŀ��ó���̴Ե� ��ȯ���Դϴ�^^', '��⵵', '���ֽ�', '���', null, 20,  20, '2022-09-24', 'U1002');
+values ('M'||SEQ_TEST_MEET.NEXTVAL, '경기광주 커피처돌이', '경기광주 거주하시는 커피처돌이님들 대환영입니다^^', '경기도', '광주시', '취미', null, 20,  20, '2022-09-24', 'U1002');
 insert into test_meet(MEET_NO, MEET_NAME, MEET_DESCRIPTION, MEET_CITY, MEET_COUNTY, MEET_INTEREST_NAME, MEET_GENDER, MEET_NOP, MEET_AGE, MEET_DATE, USER_NO) 
-values ('M'||SEQ_TEST_MEET.NEXTVAL, '�������ʵ��б� ��âȸ', '12�� �������ʵ��б� ��âȸ�� �����մϴ�!!!', '��⵵', '������', 'ģ��/����', null, 20,  null, '2022-09-25', 'U1001');
+values ('M'||SEQ_TEST_MEET.NEXTVAL, '성남동초등학교 동창회', '12기 성남동초등학교 동창회를 모집합니다!!!', '경기도', '성남시', '친목/모임', null, 20,  null, '2022-09-25', 'U1001');
 insert into test_meet(MEET_NO, MEET_NAME, MEET_DESCRIPTION, MEET_CITY, MEET_COUNTY, MEET_INTEREST_NAME, MEET_GENDER, MEET_NOP, MEET_AGE, MEET_DATE, USER_NO) 
-values ('M'||SEQ_TEST_MEET.NEXTVAL, '��⵵ ������ ���ֹ� ����', '��⵵ ��������� �̸�����', '��⵵', '������', 'ģ��/����', null, 10,  null, '2022-09-27', 'U1003');
+values ('M'||SEQ_TEST_MEET.NEXTVAL, '경기도 성남시 거주민 모임', '경기도 성남사람들 이리오슈', '경기도', '성남시', '친목/모임', null, 10,  null, '2022-09-27', 'U1003');
 commit;
 ROLLBACK;
 

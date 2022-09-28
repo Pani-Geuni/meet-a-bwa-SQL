@@ -23,14 +23,14 @@ CREATE TABLE TEST_USER
 );
 CREATE SEQUENCE SEQ_TEST_USER INCREMENT BY 1 START WITH 1001;
 
-COMMENT ON COLUMN TEST_USER.USER_STATE IS '°èÁ¤ life À¯¹«';
+COMMENT ON COLUMN TEST_USER.USER_STATE IS 'ê³„ì • life ìœ ë¬´';
 
 insert into TEST_USER(USER_NO, USER_ID, USER_PW, USER_NAME, USER_NICKNAME, USER_EMAIL, USER_TEL, USER_BIRTH, USER_GENDER, USER_CITY, USER_COUNTY, USER_STATE, USER_INTEREST)
-values ('U'||SEQ_TEST_USER.nextval, 'qjspdl', 'dks55634', '±è¿¹Àº', '¿¹À¸´Ï', 'qjspdl@hs.ac.kr', '010-4068-5633', '19980131', 'F', '°æ±âµµ', '±¤ÁÖ½Ã', 'Y', 'Ãë¹Ì');
+values ('U'||SEQ_TEST_USER.nextval, 'qjspdl', 'dks55634', 'ê¹€ì˜ˆì€', 'ì˜ˆìœ¼ë‹ˆ', 'qjspdl@hs.ac.kr', '010-4068-5633', '19980131', 'F', 'ê²½ê¸°ë„', 'ê´‘ì£¼ì‹œ', 'Y', 'ì·¨ë¯¸');
 insert into TEST_USER(USER_NO, USER_ID, USER_PW, USER_NAME, USER_NICKNAME, USER_EMAIL, USER_TEL, USER_BIRTH, USER_GENDER, USER_CITY, USER_COUNTY, USER_STATE, USER_INTEREST)
-values ('U'||SEQ_TEST_USER.nextval, 'choi_true', 'true44', 'ÃÖÁø½Ç', 'ÃÖÆ®·ç', 'choitrue@naver.com', '010-1234-5678', '19970404', 'F', '°æ±âµµ', '±¤ÁÖ½Ã', 'Y', 'ÆÒÅ¬·´');
+values ('U'||SEQ_TEST_USER.nextval, 'choi_true', 'true44', 'ìµœì§„ì‹¤', 'ìµœíŠ¸ë£¨', 'choitrue@naver.com', '010-1234-5678', '19970404', 'F', 'ê²½ê¸°ë„', 'ê´‘ì£¼ì‹œ', 'Y', 'íŒ¬í´ëŸ½');
 insert into TEST_USER(USER_NO, USER_ID, USER_PW, USER_NAME, USER_NICKNAME, USER_EMAIL, USER_TEL, USER_BIRTH, USER_GENDER, USER_CITY, USER_COUNTY, USER_STATE, USER_INTEREST)
-values ('U'||SEQ_TEST_USER.nextval, 'pani', 'geuni123', 'ÀüÆÇ±Ù', 'ÆÄ´Ï±×´Ï', 'pani@naver.com', '010-2343-2350', '19970809', 'M', '¼­¿ïÆ¯º°½Ã', '¿ª»ïµ¿', 'Y', null);
+values ('U'||SEQ_TEST_USER.nextval, 'pani', 'geuni123', 'ì „íŒê·¼', 'íŒŒë‹ˆê·¸ë‹ˆ', 'pani@naver.com', '010-2343-2350', '19970809', 'M', 'ì„œìš¸íŠ¹ë³„ì‹œ', 'ì—­ì‚¼ë™', 'Y', null);
 commit;
 
 select * from TEST_USER where user_id='qjspdl';

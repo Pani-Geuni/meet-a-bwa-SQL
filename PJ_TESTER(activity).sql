@@ -50,9 +50,9 @@ drop sequence SEQ_TEST_ACTIVITY;
 CREATE SEQUENCE SEQ_TEST_ACTIVITY INCREMENT BY 1 START WITH 1001;
 
 insert into test_activity(activity_no, activity_name, activity_description, activity_city, activity_county, activity_interest_name, activity_gender, activity_nop, activity_age, activity_date, user_no, meet_no)
-values ('A'||SEQ_TEST_ACTIVITY.nextval, '20´ë ¸ğÀÓ', '20´ëµé ¸ğ¿©¶ó¾Æ!', '¼­¿ïÆ¯º°½Ã', '¿ª»ïµ¿', 'Ä£¸ñ/¸ğÀÓ', 'F', 20, 20, '20220926', 'U1003', 'M1002');
+values ('A'||SEQ_TEST_ACTIVITY.nextval, '20ëŒ€ ëª¨ì„', '20ëŒ€ë“¤ ëª¨ì—¬ë¼ì•„!', 'ì„œìš¸íŠ¹ë³„ì‹œ', 'ì—­ì‚¼ë™', 'ì¹œëª©/ëª¨ì„', 'F', 20, 20, '20220926', 'U1003', 'M1002');
 insert into test_activity(activity_no, activity_name, activity_description, activity_city, activity_county, activity_interest_name, activity_gender, activity_nop, activity_age, activity_date, user_no, meet_no)
-values ('A'||SEQ_TEST_ACTIVITY.nextval, '±İ±¤µ¿ °ñÇÁÁ¸ ¾×Æ¼ºñÆ¼', '±İ±¤µ¿ ¾×Æ¼ºñÆ¼ÀÔ´Ï´Ù..', '°æ±âµµ', '¼º³²½Ã', null, null, 20, null, '20220926', 'U1001',  'M1004');
+values ('A'||SEQ_TEST_ACTIVITY.nextval, 'ê¸ˆê´‘ë™ ê³¨í”„ì¡´ ì•¡í‹°ë¹„í‹°', 'ê¸ˆê´‘ë™ ì•¡í‹°ë¹„í‹°ì…ë‹ˆë‹¤..', 'ê²½ê¸°ë„', 'ì„±ë‚¨ì‹œ', null, null, 20, null, '20220926', 'U1001',  'M1004');
 commit;
 rollback;
 
