@@ -33,4 +33,4 @@ insert into TEST_USER(USER_NO, USER_ID, USER_PW, USER_NAME, USER_NICKNAME, USER_
 values ('U'||SEQ_TEST_USER.nextval, 'pani', 'geuni123', '전판근', '파니그니', 'pani@naver.com', '010-2343-2350', '19970809', 'M', '서울특별시', '역삼동', 'Y', null);
 commit;
 
-select * from TEST_USER where user_id='qjspdl';
+select * from TEST_USER;
