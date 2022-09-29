@@ -170,8 +170,32 @@ create or replace view MEET_JOIN_VIEW(
         (
             select meet_no, meet_image, meet_name, meet_description, meet_county, meet_interest_name, meet_gender, meet_nop, meet_age, meet_date, user_no, m1.like_cnt
             from TEST_MEET m left outer join(
-                select meet_no as meet_no2, count(meet_no) as like_cnt from TEST_MEET_LIKE group by meet_no) m1 on m.meet_no = m1.meet_no2) m2
-   left outer join (select meet_no as meet_no3, count(meet_no) as user_cnt from TEST_MEET_REGISTERED group by meet_no) m3 on m2.meet_no = m3.meet_no3
+                select meet_no as meet_no2, count(meet_no) as like_cnt from TEST_MEET_LIKE group by meet_no) m1 
+                on m.meet_no = m1.meet_no2) m2 left outer join (select meet_no as meet_no3, count(meet_no) as user_cnt from TEST_MEET_REGISTERED group by meet_no) m3 on m2.meet_no = m3.meet_no3
 );
 
 select * from MEET_JOIN_VIEW;
+
+create or replace view MEET_JOIN_USER_VIEW (
+    meet_no,
+    meet_image, 
+    meet_name, 
+    meet_description, 
+    meet_county, 
+    meet_interest_name, 
+    meet_gender, 
+    meet_nop, 
+    meet_age, 
+    meet_date, 
+    user_no, 
+    user_nickname, 
+    like_cnt, 
+    user_cnt 
+) as (
+    SELECT meet_no, meet_image, meet_name, meet_Description, meet_county, meet_interest_name, meet_gender, meet_nop, meet_age, meet_date, m.user_no, u.user_nickname, like_cnt, user_cnt 
+    from MEET_JOIN_VIEW m 
+    left outer join TEST_USER u 
+    on m.user_no = u.user_no 
+);
+
+SELECT * from MEET_JOIN_USER_VIEW WHERE MEET_NO='M1001';
