@@ -176,6 +176,8 @@ create or replace view MEET_JOIN_VIEW(
 
 select * from MEET_JOIN_VIEW;
 
+-- 아마 여기부터 실행시키면 될 듯 (09월 30일 오후 10시 기준)
+-- VO3을 위한 Meet과 user 조인 view
 create or replace view MEET_JOIN_USER_VIEW (
     meet_no,
     meet_image, 
@@ -198,4 +200,94 @@ create or replace view MEET_JOIN_USER_VIEW (
     on m.user_no = u.user_no 
 );
 
-SELECT * from MEET_JOIN_USER_VIEW WHERE MEET_NO='M1001';
+SELECT * from MEET_JOIN_USER_VIEW;
+
+---------- 모임 리스트 -----------
+-- 모임에 가입한 유저 리스트 불러오기 --
+-------------------------------
+SELECT REGISTERED_NO, MEET_NO, mr.USER_NO, USER_NICKNAME
+FROM TEST_MEET_REGISTERED mr JOIN TEST_USER u
+ON mr.USER_NO = u.USER_NO
+WHERE meet_no = 'M1001'
+;
+
+
+
+SELECT MR.USER_NO, REGISTERED_NO, MEET_NO
+FROM TEST_MEET_REGISTERED mr
+JOIN TEST_USER u
+ON mr.USER_NO = u.USER_NO
+ORDER BY USER_NO ASC
+;
+
+
+---------------------------
+-- 마이 페이지 나의 모임 리스트 --
+---------------------------
+create or replace view REGISTERED_VIEW1 (
+    REGISTERED_NO,
+    MEET_NO,
+    USER_NO,
+    MEET_IMAGE,
+    MEET_NAME,
+    MEET_DESCRIPTION,
+    MEET_CITY,
+    MEET_COUNTY,
+    MEET_INTEREST_NAME,
+    MEET_GENDER,
+    MEET_NOP,
+    MEET_AGE,
+    MEET_DATE
+) as (
+    SELECT mr.REGISTERED_NO, mr.MEET_NO, mr.USER_NO, m.MEET_IMAGE, m.MEET_NAME, m.MEET_DESCRIPTION, m.MEET_CITY, m.MEET_COUNTY, m.MEET_INTEREST_NAME, m.MEET_GENDER, m.MEET_NOP, m.MEET_AGE, m.MEET_DATE
+    FROM TEST_MEET_REGISTERED mr
+    LEFT OUTER JOIN TEST_MEET m
+    ON mr.MEET_NO = m.MEET_NO
+);
+
+SELECT * FROM REGISTERED_VIEW1;
+
+create or replace view LIKE_VIEW (
+    MEET_no,
+    like_cnt
+) as (
+    SELECT MEET_NO, COUNT(ml.MEET_NO)
+    FROM TEST_MEET_LIKE ml GROUP BY MEET_NO
+);
+
+SELECT * FROM LIKE_VIEW;
+
+
+create or replace view REG_LIKE_VIEW (
+    registered_no, meet_no, user_no, meet_image, meet_name, meet_description, meet_city, meet_county, meet_interest_name, meet_gender, meet_nop, meet_age, meet_date, like_cnt
+) as (
+    SELECT registered_no, rv1.meet_no, user_no, meet_image, meet_name, meet_description, meet_city, meet_county, meet_interest_name, meet_gender, meet_nop, meet_age, meet_date, lv.like_cnt
+    FROM REGISTERED_VIEW1 rv1
+    LEFT OUTER JOIN LIKE_VIEW lv
+    ON rv1.meet_no = lv.meet_no
+);
+
+select * from REG_LIKE_VIEW;
+
+
+create or replace view USER_CNT_VIEW (
+    meet_no, user_cnt
+) as (
+    select meet_no, count(meet_no)
+    from test_meet_registered group by meet_no
+);
+
+select * from user_cnt_view;
+
+
+create or replace view REG_USER_LIKE_VIEW (
+    registered_no, meet_no, user_no, meet_image, meet_name, meet_description, meet_city, meet_county, meet_interest_name, meet_gender, meet_nop, meet_age, meet_date, like_cnt, user_cnt
+) as (
+    SELECT registered_no, lv.meet_no, user_no, meet_image, meet_name, meet_description, meet_city, meet_county, meet_interest_name, meet_gender, meet_nop, meet_age, meet_date, nvl(like_cnt, 0), nvl(cv.user_cnt, 0)
+    FROM REG_LIKE_VIEW lv
+    LEFT OUTER JOIN USER_CNT_VIEW cv
+    ON lv.meet_no = cv.meet_no
+);
+
+select * from reg_user_like_view where user_no = 'U1002';
+
