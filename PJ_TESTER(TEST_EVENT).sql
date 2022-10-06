@@ -46,5 +46,3 @@ CREATE SEQUENCE SEQ_TEST_EVENT INCREMENT BY 1 START WITH 1001;
 insert into TEST_EVENT(EVENT_NO, EVENT_TITLE, EVENT_DESCRIPTION, EVENT_DATE, EVENT_D_DAY, ACTIVITY_NO, USER_NO) 
 values ('E'||SEQ_TEST_EVENT.NEXTVAL, '제2회 정기모임 행사', '제2회 정기모임 행사를 진행하려합니다!\n오랜만에 진행하는 행사이니만큼 많은 참석부탁드려요~', sysdate, '2022-10-10 12:00:00', 'A1001', 'U1001');
 commit;
-
-select sysdate from dual;

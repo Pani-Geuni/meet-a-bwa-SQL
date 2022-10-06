@@ -44,7 +44,6 @@ values ('M'||SEQ_TEST_MEET.NEXTVAL, '성남동초등학교 동창회', '12기 �
 insert into test_meet(MEET_NO, MEET_NAME, MEET_DESCRIPTION, MEET_CITY, MEET_COUNTY, MEET_INTEREST_NAME, MEET_GENDER, MEET_NOP, MEET_AGE, MEET_DATE, USER_NO) 
 values ('M'||SEQ_TEST_MEET.NEXTVAL, '경기도 성남시 거주민 모임', '경기도 성남사람들 이리오슈', '경기도', '성남시', '친목/모임', null, 10,  null, '2022-09-27', 'U1003');
 commit;
-ROLLBACK;
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -91,7 +90,6 @@ CREATE SEQUENCE SEQ_TEST_MEET_L INCREMENT BY 1 START WITH 1001;
 insert into TEST_MEET_LIKE(meet_like_no, meet_no, user_no) values ('ML'||SEQ_TEST_MEET_L.nextval, 'M1001', 'U1001');
 insert into TEST_MEET_LIKE(meet_like_no, meet_no, user_no) values ('ML'||SEQ_TEST_MEET_L.nextval, 'M1001', 'U1002');
 commit;
-rollback;
 
 
 --------------------------------------------------------------------------------------------------------------------
@@ -142,13 +140,8 @@ insert into TEST_MEET_REGISTERED(registered_no, meet_no, user_no) values ('MR'||
 insert into TEST_MEET_REGISTERED(registered_no, meet_no, user_no) values ('MR'||SEQ_TEST_MEET_R.nextval, 'M1001', 'U1003');
 insert into TEST_MEET_REGISTERED(registered_no, meet_no, user_no) values ('MR'||SEQ_TEST_MEET_R.nextval, 'M1002', 'U1002');
 commit;
-rollback;
-
 
 --------------------------------------------------------------------------------------------------------------------
-
-
-drop view MEET_JOIN_VIEW;
 
 create or replace view MEET_JOIN_VIEW(
     meet_no,
@@ -174,7 +167,6 @@ create or replace view MEET_JOIN_VIEW(
                 on m.meet_no = m1.meet_no2) m2 left outer join (select meet_no as meet_no3, count(meet_no) as user_cnt from TEST_MEET_REGISTERED group by meet_no) m3 on m2.meet_no = m3.meet_no3
 );
 
-select * from MEET_JOIN_VIEW;
 
 -- 아마 여기부터 실행시키면 될 듯 (09월 30일 오후 10시 기준)
 -- VO3을 위한 Meet과 user 조인 view
@@ -199,26 +191,6 @@ create or replace view MEET_JOIN_USER_VIEW (
     left outer join TEST_USER u 
     on m.user_no = u.user_no 
 );
-
-SELECT * from MEET_JOIN_USER_VIEW;
-
----------- 모임 리스트 -----------
--- 모임에 가입한 유저 리스트 불러오기 --
--------------------------------
-SELECT REGISTERED_NO, MEET_NO, mr.USER_NO, USER_NICKNAME
-FROM TEST_MEET_REGISTERED mr JOIN TEST_USER u
-ON mr.USER_NO = u.USER_NO
-WHERE meet_no = 'M1001'
-;
-
-
-
-SELECT MR.USER_NO, REGISTERED_NO, MEET_NO
-FROM TEST_MEET_REGISTERED mr
-JOIN TEST_USER u
-ON mr.USER_NO = u.USER_NO
-ORDER BY USER_NO ASC
-;
 
 
 ---------------------------
@@ -245,7 +217,6 @@ create or replace view REGISTERED_VIEW1 (
     ON mr.MEET_NO = m.MEET_NO
 );
 
-SELECT * FROM REGISTERED_VIEW1;
 
 create or replace view LIKE_VIEW (
     MEET_no,
@@ -255,7 +226,6 @@ create or replace view LIKE_VIEW (
     FROM TEST_MEET_LIKE ml GROUP BY MEET_NO
 );
 
-SELECT * FROM LIKE_VIEW;
 
 
 create or replace view REG_LIKE_VIEW (
@@ -267,7 +237,6 @@ create or replace view REG_LIKE_VIEW (
     ON rv1.meet_no = lv.meet_no
 );
 
-select * from REG_LIKE_VIEW;
 
 
 create or replace view USER_CNT_VIEW (
@@ -277,7 +246,6 @@ create or replace view USER_CNT_VIEW (
     from test_meet_registered group by meet_no
 );
 
-select * from user_cnt_view;
 
 
 create or replace view REG_USER_LIKE_VIEW (
@@ -289,5 +257,4 @@ create or replace view REG_USER_LIKE_VIEW (
     ON lv.meet_no = cv.meet_no
 );
 
-select * from reg_user_like_view where user_no = 'U1002';
 

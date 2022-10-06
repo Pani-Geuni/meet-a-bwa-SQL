@@ -1,4 +1,3 @@
-drop table member;
 CREATE TABLE TEST_USER
 (
   USER_NO VARCHAR2(20) NOT NULL 
@@ -32,5 +31,3 @@ values ('U'||SEQ_TEST_USER.nextval, 'choi_true', 'true44', '최진실', '최트�
 insert into TEST_USER(USER_NO, USER_ID, USER_PW, USER_NAME, USER_NICKNAME, USER_EMAIL, USER_TEL, USER_BIRTH, USER_GENDER, USER_CITY, USER_COUNTY, USER_STATE, USER_INTEREST)
 values ('U'||SEQ_TEST_USER.nextval, 'pani', 'geuni123', '전판근', '파니그니', 'pani@naver.com', '010-2343-2350', '19970809', 'M', '서울특별시', '역삼동', 'Y', null);
 commit;
-
-select * from TEST_USER;

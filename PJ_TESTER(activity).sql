@@ -47,7 +47,6 @@ REFERENCES TEST_MEET
 ENABLE;
 
 -- SEQUENCE CREATE
-drop sequence SEQ_TEST_ACTIVITY;
 CREATE SEQUENCE SEQ_TEST_ACTIVITY INCREMENT BY 1 START WITH 1001;
 
 insert into test_activity(activity_no, activity_name, activity_description, activity_city, activity_county, activity_interest_name, activity_gender, activity_nop, activity_age, activity_date, user_no, meet_no)
@@ -55,7 +54,6 @@ values ('A'||SEQ_TEST_ACTIVITY.nextval, '20대 모임', '20대들 모여라아!'
 insert into test_activity(activity_no, activity_name, activity_description, activity_city, activity_county, activity_interest_name, activity_gender, activity_nop, activity_age, activity_date, user_no, meet_no)
 values ('A'||SEQ_TEST_ACTIVITY.nextval, '금광동 골프존 액티비티', '금광동 액티비티입니다..', '경기도', '성남시', null, null, 20, null, '20220926', 'U1001',  'M1001');
 commit;
-rollback;
 
 ------------------------------------------------------------------------------
 
@@ -98,7 +96,6 @@ REFERENCES TEST_USER
 ENABLE;
 
 -- SEQUENCE CREATE
-drop SEQUENCE SEQ_TEST_ACTIVITY_L; 
 CREATE SEQUENCE SEQ_TEST_ACTIVITY_L INCREMENT BY 1 START WITH 1001;
 
 insert into TEST_ACTIVITY_LIKE(ACTIVITY_LIKE_NO, ACTIVITY_NO, USER_NO)
@@ -106,9 +103,6 @@ values ('AL'||SEQ_TEST_ACTIVITY_L.nextval, 'A1002', 'U1002');
 insert into TEST_ACTIVITY_LIKE(ACTIVITY_LIKE_NO, ACTIVITY_NO, USER_NO)
 values ('AL'||SEQ_TEST_ACTIVITY_L.nextval, 'A1002', 'U1003');
 commit;
-rollback;
-
-
 
 --------------------------------------------------------------------------------------------------------
 
@@ -152,7 +146,6 @@ ENABLE;
 
 
 -- SEQUENCE CREATE
-drop SEQUENCE SEQ_TEST_ACTIVITY_R; 
 CREATE SEQUENCE SEQ_TEST_ACTIVITY_R INCREMENT BY 1 START WITH 1001;
 
 
@@ -179,19 +172,6 @@ from (
             left outer join (select activity_no as activity_no3, count(activity_no) as user_cnt from test_activity_registered group by activity_no) a3 on a2.activity_no = a3.activity_no3
 );
 
-select * from activity_join_view order by activity_no;
-
-
-select activity_no, activity_image, activity_name, activity_description, activity_city, activity_county, activity_interest_name, activity_gender, activity_nop, activity_age, activity_date, user_no, meet_no, like_cnt, user_cnt
-from activity_join_view
-where rownum between 1 and 10
-order by activity_no;
-
-
-SELECT *
-FROM ACTIVITY_JOIN_VIEW
-WHERE MEET_NO = 'M1001'
-ORDER BY ACTIVITY_NO DESC;
 
 ------------------------------
 -- 마이 페이지 나의 액티비티 리스트 --
@@ -218,7 +198,6 @@ create or replace view ACTI_REG_VIEW1(
     ON ar.ACTIVITY_NO = a.ACTIVITY_NO
 );
 
-SELECT * FROM ACTI_REG_VIEW1;
 
 CREATE OR REPLACE VIEW ACTI_LIKE_VIEW (
     ACTIVITY_NO,
@@ -228,7 +207,6 @@ CREATE OR REPLACE VIEW ACTI_LIKE_VIEW (
     FROM TEST_ACTIVITY_LIKE AL GROUP BY ACTIVITY_NO
 );
 
-SELECT * FROM ACTI_LIKE_VIEW;
 
 
 CREATE OR REPLACE VIEW ACTI_REG_LIKE_VIEW (
@@ -240,7 +218,6 @@ CREATE OR REPLACE VIEW ACTI_REG_LIKE_VIEW (
     ON RV1.ACTIVITY_NO = LV.ACTIVITY_NO
 );
 
-SELECT * FROM ACTI_REG_LIKE_VIEW;
 
 
 CREATE OR REPLACE VIEW ACTI_USER_CNT_VIEW (
@@ -250,7 +227,6 @@ CREATE OR REPLACE VIEW ACTI_USER_CNT_VIEW (
     FROM TEST_ACTIVITY_REGISTERED GROUP BY ACTIVITY_NO
 );
 
-SELECT * FROM ACTI_USER_CNT_VIEW;
 
 
 CREATE OR REPLACE VIEW ACTI_REG_USER_LIKE_VIEW (
@@ -262,8 +238,12 @@ CREATE OR REPLACE VIEW ACTI_REG_USER_LIKE_VIEW (
     ON LV.ACTIVITY_NO = CV.ACTIVITY_NO
 );
 
-SELECT * FROM ACTI_REG_USER_LIKE_VIEW WHERE USER_NO = 'U1001';
 
+
+CREATE VIEW ACTI_REG_LIKE_NICK_VIEW AS
+SELECT A.ACTIVITY_NO, ACTIVITY_IMAGE, ACTIVITY_NAME, ACTIVITY_DESCRIPTION, ACTIVITY_CITY, ACTIVITY_COUNTY, ACTIVITY_INTEREST_NAME, ACTIVITY_GENDER, ACTIVITY_NOP, ACTIVITY_AGE, ACTIVITY_DATE, MEET_NO,  A.USER_NO, LIKE_CNT ,USER_CNT, U.USER_NICKNAME
+FROM ACTIVITY_JOIN_VIEW A 
+LEFT OUTER JOIN TEST_USER U ON A.USER_NO = U.USER_NO;
 
 CREATE VIEW ACTI_REG_LIKE_NICK_VIEW AS
 SELECT A.ACTIVITY_NO, ACTIVITY_IMAGE, ACTIVITY_NAME, ACTIVITY_DESCRIPTION, ACTIVITY_CITY, ACTIVITY_COUNTY, ACTIVITY_INTEREST_NAME, ACTIVITY_GENDER, ACTIVITY_NOP, ACTIVITY_AGE, ACTIVITY_DATE, MEET_NO,  A.USER_NO, LIKE_CNT ,USER_CNT, U.USER_NICKNAME
